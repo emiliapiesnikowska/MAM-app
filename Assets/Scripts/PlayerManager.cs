@@ -7,10 +7,14 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     public static bool gameOver;
     public GameObject gameOverPanel;
+    public GameObject startingText;
+
+    public static bool isGameStarted;
     void Start()
     {
-        gameOver = false;
         Time.timeScale = 1;
+        gameOver = false;
+        isGameStarted = false;
     }
 
     // Update is called once per frame
@@ -19,6 +23,15 @@ public class PlayerManager : MonoBehaviour
         if(gameOver){
             Time.timeScale = 0;
             gameOverPanel.SetActive(true);
+        }
+
+        if (SwipeManager.tap){
+            isGameStarted = true;
+            Destroy(startingText);
+        }
+        if (Input.GetKeyDown(KeyCode.Space)){
+            isGameStarted = true;
+            Destroy(startingText);
         }
     }
 }
