@@ -90,6 +90,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoadWorksBarrierHigh
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a37f65f74eed7de478d621fdf53cf0b7, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a37f65f74eed7de478d621fdf53cf0b7, type: 3}
 --- !u!4 &460130391220229159 stripped
@@ -97,6 +101,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a37f65f74eed7de478d621fdf53cf0b7, type: 3}
   m_PrefabInstance: {fileID: 137376669361402828}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &948401946907856541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a37f65f74eed7de478d621fdf53cf0b7, type: 3}
+  m_PrefabInstance: {fileID: 137376669361402828}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8283546585727642225
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948401946907856541}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01275116, y: 0.012751158, z: 0.033114705}
+  m_Center: {x: 0, y: 3.0005809e-16, z: -0.010557354}
 --- !u!1001 &205281078098867577
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -236,8 +258,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrafficCone
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
+--- !u!1 &1258728104704288146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
+  m_PrefabInstance: {fileID: 2141056294566369475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2399288657121809485
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258728104704288146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0139999995, y: 0.013999997, z: 0.15377477}
+  m_Center: {x: 0, y: 6.207248e-17, z: 0.069887385}
 --- !u!4 &1890445481885269800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
@@ -298,8 +342,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrafficCone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
+--- !u!1 &4683341823073670743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
+  m_PrefabInstance: {fileID: 5494386335496301318}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3211631154932433973
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683341823073670743}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0139999995, y: 0.013999997, z: 0.15377478}
+  m_Center: {x: 0, y: 0, z: 0.06988739}
 --- !u!4 &5455339364206316781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 55739dc67b0471146a0b0bc7a5d87718, type: 3}
