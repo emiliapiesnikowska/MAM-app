@@ -900,8 +900,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardSpeed: 7
   laneDistance: 2.5
-  jumpForce: 20
-  Gravity: -20
+  jumpForce: 12
+  rotationSpeed: 180
+  gravity: -20
 --- !u!136 &1296515314
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1295,19 +1296,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7b315c619b440474fb588e18238a9cc5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.54167527
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7b315c619b440474fb588e18238a9cc5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.54167527
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7b315c619b440474fb588e18238a9cc5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.45451945
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7b315c619b440474fb588e18238a9cc5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.45451945
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7b315c619b440474fb588e18238a9cc5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1315,7 +1316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7b315c619b440474fb588e18238a9cc5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 80
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 7b315c619b440474fb588e18238a9cc5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
