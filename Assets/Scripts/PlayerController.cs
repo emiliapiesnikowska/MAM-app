@@ -116,14 +116,6 @@ public class PlayerController : MonoBehaviour
         canJump = true; // Skok odblokowany tylko, gdy postaæ jest na ziemi
     }
 
-    private IEnumerator ForceJumpUnlock()
-    {
-        // Dodatkowe sprawdzenie w razie b³êdów z `isGrounded`
-        yield return new WaitForSeconds(0.04f); // Krótkie opóŸnienie
-        canJump = true;
-        Debug.Log("Skok odblokowany wymuszeniem!");
-    }
-
     private void FixedUpdate()
     {
         if (!PlayerManager.isGameStarted) return;
