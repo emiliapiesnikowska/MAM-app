@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PlayerManager.isGameStarted) return; // Blokada przemieszczania, gdy gra siê nie rozpoczê³a
         // Ruch postaci w przód
         direction.z = forwardSpeed;
 
