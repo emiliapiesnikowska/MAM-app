@@ -9,111 +9,137 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     public float forwardSpeed;
 
+    private Animator animator;
+    private Quaternion targetRotation; // Docelowy obrót
 
     private int desiredLane = 1;
     public float laneDistance = 4; //odlegloœæ pomiedzy 2 liniami 
-
+    
     public float jumpForce;
-
-    public float Gravity = -20;
+    public float rotationSpeed = 5f;
+    private bool isRotating = false; // Flaga blokuj¹ca zmianê pasa podczas obrotu
+    private bool canJump = true; // Flaga umo¿liwiaj¹ca skakanie
+    public float gravity = -20;
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
-
+        animator = GetComponentInChildren<Animator>();
+        targetRotation = transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Ruch postaci w przód
         direction.z = forwardSpeed;
 
-
-
-        direction.y += Gravity*Time.deltaTime;
-
-        if(controller.isGrounded){
-            if(Input.GetKeyDown(KeyCode.UpArrow)){
-                    Jump();
-            }
-
-            if (SwipeManager.swipeUp){
-                    Jump();
-            }
-                    
-
-        }
-        else {
-            direction.y += Gravity *Time.deltaTime;
-        }
-
-
-        
-        if(Input.GetKeyDown(KeyCode.RightArrow)){
-            desiredLane++;
-            if(desiredLane==3)
-                desiredLane = 2;
-        }
-
-        if (SwipeManager.swipeRight)
+        // Grawitacja
+        if (!controller.isGrounded)
         {
-            desiredLane++;
-            if (desiredLane == 3)
-                desiredLane = 2;
+            direction.y += gravity * Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow)){
-            desiredLane--;
-            if(desiredLane==-1) 
-                desiredLane = 0;
-        }
-
-        if (SwipeManager.swipeLeft)
+        // Skok (odblokowany po obrocie i gdy postaæ jest na ziemi)
+        if (IsGrounded() && canJump && (Input.GetKeyDown(KeyCode.UpArrow) || SwipeManager.swipeUp))
         {
-            desiredLane--;
-            if (desiredLane == -1)
-                desiredLane = 0;
+            Jump();
         }
 
-        Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
-        if(desiredLane == 0){
-            targetPosition += Vector3.left * laneDistance;
+        // Zmiana pasa (blokowana podczas obrotu)
+        if (!isRotating)
+        {
+            if (Input.GetKeyDown(KeyCode.RightArrow) || SwipeManager.swipeRight)
+            {
+                if (desiredLane < 2) // Maksymalny pas to 2
+                {
+                    desiredLane++;
+                    StartCoroutine(RotatePlayer(90)); // Obrót w prawo
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) || SwipeManager.swipeLeft)
+            {
+                if (desiredLane > 0) // Minimalny pas to 0
+                {
+                    desiredLane--;
+                    StartCoroutine(RotatePlayer(-90)); // Obrót w lewo
+                }
+            }
         }
-        else if (desiredLane == 2){
-            targetPosition += Vector3.right * laneDistance;
+
+        // Obliczenie pozycji docelowej na podstawie pasa
+        Vector3 targetPosition = transform.position.z * Vector3.forward + transform.position.y * Vector3.up;
+        if (desiredLane == 0) targetPosition += Vector3.left * laneDistance;
+        if (desiredLane == 2) targetPosition += Vector3.right * laneDistance;
+
+        // Ruch postaci w kierunku docelowym
+        Vector3 moveDir = (targetPosition - transform.position).normalized * 25 * Time.deltaTime;
+        if (moveDir.sqrMagnitude < (targetPosition - transform.position).sqrMagnitude)
+        {
+            controller.Move(moveDir);
+        }
+        else
+        {
+            controller.Move(targetPosition - transform.position);
         }
 
-       if(transform.position == targetPosition){
-              return;
-       }
-
-       Vector3 diff = targetPosition - transform.position;
-       Vector3 moveDir = diff.normalized * 25 * Time.deltaTime;
-       if(moveDir.sqrMagnitude < diff.sqrMagnitude){
-              controller.Move(moveDir);
-       }
-       else{
-              controller.Move(diff);
-       }
-
+        // Aktualizacja obrotu postaci
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 
-    private void FixedUpdate(){
-        if (!PlayerManager.isGameStarted)
+    private void Jump()
+    {
+        direction.y = jumpForce;
+        animator.SetTrigger("Jump");
+    }
+
+    private IEnumerator RotatePlayer(float angle)
+    {
+        isRotating = true; // Blokada zmiany pasa
+        canJump = false; // Tymczasowa blokada skoku
+        targetRotation = Quaternion.Euler(0, transform.eulerAngles.y + angle, 0);
+
+        // Trwa obrót przez okreœlony czas
+        float elapsed = 0f;
+        float rotationDuration = 0.15f; // D³ugoœæ obrotu
+        while (elapsed < rotationDuration)
         {
-            return;
+            elapsed += Time.deltaTime;
+            yield return null;
         }
+
+        // Powrót do patrzenia na wprost
+        targetRotation = Quaternion.Euler(0, 0, 0);
+        isRotating = false; // Odblokowanie zmiany pasa
+
+        canJump = true; // Skok odblokowany tylko, gdy postaæ jest na ziemi
+    }
+
+    private IEnumerator ForceJumpUnlock()
+    {
+        // Dodatkowe sprawdzenie w razie b³êdów z `isGrounded`
+        yield return new WaitForSeconds(0.04f); // Krótkie opóŸnienie
+        canJump = true;
+        Debug.Log("Skok odblokowany wymuszeniem!");
+    }
+
+    private void FixedUpdate()
+    {
+        if (!PlayerManager.isGameStarted) return;
+
+        // Ruch postaci w przód
         controller.Move(direction * Time.fixedDeltaTime);
     }
 
-    private void Jump(){
-        direction.y = jumpForce;
-    }
-
-   private void OnControllerColliderHit(ControllerColliderHit hit){
-        if(hit.transform.tag=="Obstacle"){
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.transform.CompareTag("Obstacle"))
+        {
             PlayerManager.gameOver = true;
         }
-   }
+    }
+    private bool IsGrounded()
+    {
+        return controller.isGrounded || Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    }
 }

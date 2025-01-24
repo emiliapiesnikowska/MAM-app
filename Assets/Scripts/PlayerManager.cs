@@ -8,13 +8,14 @@ public class PlayerManager : MonoBehaviour
     public static bool gameOver;
     public GameObject gameOverPanel;
     public GameObject startingText;
-
+    private Animator animator;
     public static bool isGameStarted;
     void Start()
     {
         Time.timeScale = 1;
         gameOver = false;
         isGameStarted = false;
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -28,10 +29,12 @@ public class PlayerManager : MonoBehaviour
         if (SwipeManager.tap){
             isGameStarted = true;
             Destroy(startingText);
+            animator.SetTrigger("Start");
         }
         if (Input.GetKeyDown(KeyCode.Space)){
             isGameStarted = true;
             Destroy(startingText);
+            animator.SetTrigger("Start");
         }
     }
 }
